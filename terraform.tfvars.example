@@ -1,0 +1,2 @@
+# terraform.tfvars.example (SAFE to commit)
+admin_password = "REPLACE_ME"
