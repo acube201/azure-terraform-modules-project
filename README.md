@@ -4,7 +4,7 @@
 ![Static Badge](https://img.shields.io/badge/Azure-%20East%20us%202-blue)
 
 
-Overview
+## Overview
 
 This repository demonstrates a production-oriented Terraform architecture on Azure, with an emphasis on:
 
@@ -20,7 +20,7 @@ Clear and repeatable workflows
 
 The focus of this project is how infrastructure is safely operated over time, not just how resources are deployed.
 
-Architecture Summary
+## Architecture Summary
 
 Cloud Provider: Microsoft Azure
 
@@ -47,7 +47,7 @@ Repository Structure
 The root configuration orchestrates environment behavior.
 Modules are reusable, environment-agnostic building blocks.
 
-Remote State Design
+## Remote State Design
 Rationale
 
 Terraform state is critical operational data.
@@ -84,7 +84,7 @@ terraform {
 The backend configuration is intentionally static.
 Environment selection does not occur here.
 
-Environment Isolation Strategy
+## Environment Isolation Strategy
 State-Based Separation
 
 Environments are isolated using separate backend state keys, not Terraform workspaces:
@@ -121,11 +121,12 @@ Production access is deliberate
 
 Accidental context switching is avoided
 
-Guardrails and Safety Controls
+## Guardrails and Safety Controls
 Terraform Lifecycle Protection
 
 Critical resources include a lifecycle rule:
 
+```hcl
 lifecycle {
   prevent_destroy = true
 }
@@ -174,14 +175,16 @@ Platform-level deletion protection
 
 The system is designed with the assumption that human error is inevitable.
 
-Operational Workflow
+## Operational Workflow
 
 A typical workflow follows this pattern:
 
+```text
 tfdev
 terraform plan
 terraform apply
 
+```text
 tfprod
 terraform plan
 (terraform apply after review)
@@ -190,24 +193,24 @@ terraform plan
 Key principle:
 Production changes are never implicit.
 
-Design Principles Demonstrated
+## Design Principles Demonstrated
 
 Remote state is mandatory for safe Terraform usage
 
 Environment isolation should be state-based
-
-Guardrails should be enforced by systems, not memory
+```md
+Guardrails should be enforced by systems rather than operator memory
 
 Terraform should be operated deliberately, not interactively
 
 Safety and clarity take priority over convenience
 
-Notes
+## Notes
 
 This repository intentionally minimizes unnecessary resource creation during learning and design phases.
 The emphasis is on correct architecture, operational safety, and repeatability, rather than cost or portal artifacts.
 
-Summary
+## Summary
 
 This project demonstrates Terraform used as an operational system, not just a deployment tool.
 
