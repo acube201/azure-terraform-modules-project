@@ -33,6 +33,7 @@ Environments: dev, prod
 Modules: Networking, Virtual Machine
 
 Repository Structure
+```hcl 
 .
 ├── backend.tf
 ├── main.tf
@@ -42,7 +43,7 @@ Repository Structure
 │   ├── network/
 │   └── vm/
 └── README.md
-
+```
 
 The root configuration orchestrates environment behavior.
 Modules are reusable, environment-agnostic building blocks.
@@ -72,6 +73,7 @@ Durability and consistency
 Safe multi-environment operation
 
 Backend Configuration
+```hcl 
 terraform {
   backend "azurerm" {
     resource_group_name  = "tfstate-rg"
@@ -79,7 +81,7 @@ terraform {
     container_name       = "tfstate2"
   }
 }
-
+``` 
 
 The backend configuration is intentionally static.
 Environment selection does not occur here.
@@ -108,10 +110,10 @@ Environment Switching
 Environment context is selected explicitly during initialization.
 
 Custom shell commands are used to avoid ambiguity:
-
+```text
 tfdev   → initializes Terraform with dev state
 tfprod  → initializes Terraform with prod state
-
+```
 
 This ensures:
 
@@ -130,7 +132,7 @@ Critical resources include a lifecycle rule:
 lifecycle {
   prevent_destroy = true
 }
-
+``` 
 
 This instructs Terraform to refuse destructive actions, including:
 
@@ -183,12 +185,12 @@ A typical workflow follows this pattern:
 tfdev
 terraform plan
 terraform apply
-
+```
 ```text
 tfprod
 terraform plan
 (terraform apply after review)
-
+```
 
 Key principle:
 Production changes are never implicit.
@@ -200,7 +202,7 @@ Remote state is mandatory for safe Terraform usage
 Environment isolation should be state-based
 ```md
 Guardrails should be enforced by systems rather than operator memory
-
+```
 Terraform should be operated deliberately, not interactively
 
 Safety and clarity take priority over convenience
